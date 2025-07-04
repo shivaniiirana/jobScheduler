@@ -8,7 +8,7 @@ import {
 import { JobService } from './job.service';
 import { CreateJobDto } from './dtos/createJob.dto';
 
-@ApiTags('Jobs') 
+@ApiTags('Jobs')
 @Controller('jobs')
 export class JobController {
   constructor(private readonly jobService: JobService) {}

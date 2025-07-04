@@ -30,5 +30,4 @@ export class Job {
 
   @Column({ type: 'timestamp', nullable: true })
   nextRetryTime: Date;
-
 }

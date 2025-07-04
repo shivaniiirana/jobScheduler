@@ -8,7 +8,7 @@ export class JobService {
   constructor(
     @InjectRepository(Job) private readonly jobRepo: Repository<Job>,
   ) {}
-//creating a job
+  //creating a job
   async createJobService(
     type: string,
     metadata: Record<string, any>,

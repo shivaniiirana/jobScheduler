@@ -1,6 +1,6 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import Redis from 'ioredis';
-import Redlock, { Lock } from 'redlock'; 
+import Redlock, { Lock } from 'redlock';
 
 @Injectable()
 export class RedisLockService implements OnModuleInit {
@@ -8,7 +8,7 @@ export class RedisLockService implements OnModuleInit {
   private redlock: Redlock;
 
   onModuleInit() {
-    this.client = new Redis(); 
+    this.client = new Redis();
     this.redlock = new Redlock([this.client], {
       retryCount: 3,
       retryDelay: 200,
@@ -17,12 +17,10 @@ export class RedisLockService implements OnModuleInit {
   }
 
   async acquireLock(resource: string, ttl: number): Promise<Lock> {
-
     return this.redlock.acquire([resource], ttl);
   }
 
   async releaseLock(lock: Lock): Promise<void> {
-    
     await lock.release();
   }
 }

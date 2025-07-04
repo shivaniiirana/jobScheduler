@@ -10,7 +10,7 @@ import { RedisModule } from './redis/redis.module';
   imports: [
     ScheduleModule.forRoot(),
     TypeOrmModule.forRoot({
-      type: 'postgres', 
+      type: 'postgres',
       host: 'localhost',
       port: 5432,
       username: 'postgres',

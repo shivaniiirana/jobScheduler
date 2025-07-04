@@ -10,7 +10,7 @@ export class JobRunnerService {
   //map of job handlers
   private readonly jobHandlers: Map<string, JobHandlerFunction>;
 
-    constructor() {
+  constructor() {
     // Initialize the job handlers map with specific job types and their corresponding handler functions
     this.jobHandlers = new Map<string, JobHandlerFunction>([
       ['sendEmail', this.sendEmail.bind(this)],
@@ -23,29 +23,25 @@ export class JobRunnerService {
   async run(type: string, metadata: JobMetadata) {
     const handler = this.jobHandlers.get(type);
 
-      if (!handler) {
-        throw new NotFoundException("no service register for this job");
-      
+    if (!handler) {
+      throw new NotFoundException('no service register for this job');
     }
 
     this.logger.log(`Running job of type: ${type}`);
     await handler(metadata);
   }
 
-    private async sendEmail({ to, subject, body }: any) {
-        console.log('sending email')
-        // throw new Error('Email service not implemented');
+  private async sendEmail({ to, subject, body }: any) {
+    console.log('sending email');
+    // throw new Error('Email service not implemented');
     this.logger.log(`Sending email to ${to} | Subject: ${subject}`);
-   
   }
 
   private async generateReport({ reportType }: any) {
     this.logger.log('generating report of type');
-  
   }
 
   private async syncUsers({ source }: any) {
     this.logger.log('Syncing users');
-  
   }
 }
