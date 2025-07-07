@@ -31,17 +31,17 @@ export class JobRunnerService {
     await handler(metadata);
   }
 
-  private async sendEmail({ to, subject, body }: any) {
+  private sendEmail({ to, subject }: any) {
     console.log('sending email');
     // throw new Error('Email service not implemented');
     this.logger.log(`Sending email to ${to} | Subject: ${subject}`);
   }
 
-  private async generateReport({ reportType }: any) {
-    this.logger.log('generating report of type');
+  private generateReport({ reportType }: any) {
+    this.logger.log(`generating report of type ${reportType}`);
   }
 
-  private async syncUsers({ source }: any) {
-    this.logger.log('Syncing users');
+  private syncUsers({ source }: any) {
+    this.logger.log(`Syncing users ${source}`);
   }
 }

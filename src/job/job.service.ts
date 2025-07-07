@@ -14,12 +14,14 @@ export class JobService {
     metadata: Record<string, any>,
     scheduledTime: Date,
     recurring = false,
+    recurringInterval?: number,
   ) {
     const job = this.jobRepo.create({
       type,
       metadata,
       scheduledTime,
       recurring,
+      recurringInterval,
     });
 
     return this.jobRepo.save(job);

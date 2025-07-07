@@ -41,4 +41,6 @@ export class CreateJobDto {
   @IsOptional()
   @IsBoolean()
   recurring?: boolean;
+
+  recurringInterval?: number;
 }

@@ -1,4 +1,4 @@
-import { Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, LessThanOrEqual } from 'typeorm';
@@ -6,7 +6,6 @@ import { Job } from '../entities/job.entity';
 import { JobRunnerService } from './jobRunner.service';
 import {
   MAX_RETRIES,
-  NEXT_RECURRING,
   RETRY_DELAY,
 } from 'src/constants/jobScheduler.constants';
 import { RedisLockService } from 'src/redis/redis.service';
@@ -54,7 +53,7 @@ export class SchedulerService {
         // Executing the job
         await this.executeJob(job);
       } catch (err) {
-        this.logger.warn(`Error in Job ${job.id} - ${err.message}`);
+        this.logger.warn(`Error in Job ${job.id} - ${err}`);
       } finally {
         // Releasing lock
         if (lock) {
@@ -81,7 +80,7 @@ export class SchedulerService {
       const now = new Date();
       // if the job is recurring, scheduling it for the next run
       if (job.recurring) {
-        const nextRun = new Date(now.getTime() + NEXT_RECURRING); // 24 hours later
+        const nextRun = new Date(now.getTime() + job.recurringInterval); 
         await this.jobRepo.update(job.id, {
           scheduledTime: nextRun,
           lastExecutedAt: now,
@@ -106,9 +105,7 @@ export class SchedulerService {
           : new Date(Date.now() + RETRY_DELAY),
       });
 
-      this.logger.error(
-        `Job ${job.id} failed ${retryCount} retry, ${err.message}`,
-      );
+      this.logger.error(`Job ${job.id} failed ${retryCount} retry, ${err}`);
     }
   }
 }
