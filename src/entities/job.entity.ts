@@ -31,6 +31,6 @@ export class Job {
   @Column({ type: 'timestamp', nullable: true })
   nextRetryTime: Date;
 
-  @Column({ type: 'int', nullable: true }) // store in milliseconds (e.g. 86400000 for 24hr)
+  @Column({ type: 'int', nullable: true }) 
   recurringInterval: number;
 }
